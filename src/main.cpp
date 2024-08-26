@@ -4,8 +4,9 @@
 
 void setup() {
     Serial.begin(115200);
-    setup_wifiAP();
-}
+    Config_server();
+    
+} 
 
 void loop() {
 
