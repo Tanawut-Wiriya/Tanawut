@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>CES-DCMeters</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="bstyles.css" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+    <script src="bscripts.js"></script>
+    <script src="scripts.js" defer></script>
+</head>
+<body>
+    <div class="b-example-divider"></div>
+    <div class="container">
+        <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+            <a href="/" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
+                <img src="_Logo.png" alt="Avatar Logo" style="width:40px;" class="rounded-pill">
+            </a>
+            <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+                <li><a href="/" class="nav-link px-2 link-dark">Home</a></li>
+                <li><a href="/networks" class="nav-link px-2 link-dark">IPAddress</a></li>
+                <li><a href="/wifi" class="nav-link px-2 link-dark">WiFi</a></li>
+                <li><a href="/mqtt" class="nav-link px-2 link-dark">MQTT</a></li>
+                <li><a href="/modbus" class="nav-link px-2 link-dark">Modbus</a></li>
+                <li><a href="#" class="nav-link px-2 link-dark">LoRa</a></li>
+            </ul>
+            <div class="col-md-3 text-end">
+                <form id="saveForm" action="/saveConfig" method="POST">
+                    <input type="hidden" name="action" id="actionInput" value="">
+                    <button type="button" class="btn btn-outline-success me-2" id="completeButton">Complete</button>
+                    <button type="button" class="btn btn-outline-danger me-2" id="restartButton">Restart</button>
+                </form>
+            </div>
+        </header>
+    </div>
+
+    
+    <div class="d-flex justify-content-center align-items-center">
+        <div class="col-md-5">
+            <form id="networksConfig" action="networksConfig" method="POST">
+                <div class="mb-3 mt-3">
+                    <label for="IPAddress" class="form-label">IPAddress: </label>
+                    <input type="text" class="form-control" id="IPAddress" placeholder="Enter IPAddress" name="IPAddress">
+                </div>
+                <div class="mb-3">
+                    <label for="gateway" class="form-label">Gateway: </label>
+                    <input type="text" class="form-control" id="gateway" placeholder="Enter gateway" name="gateway">
+                </div>
+                <div class="mb-3">
+                    <label for="subnet" class="form-label">Subnet Mask: </label>
+                    <input type="text" class="form-control" id="subnet" placeholder="255.255.255.0" name="subnet" value="255.255.255.0" disabled>
+                </div>
+                <div class="mb-3">
+                    <label for="dns" class="form-label">DNS: </label>
+                    <input type="text" class="form-control" id="dns" placeholder="1.1.1.1" name="dns" value="1.1.1.1" disabled>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
