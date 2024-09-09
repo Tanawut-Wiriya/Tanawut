@@ -64,6 +64,11 @@ void setup_wifi() {
 }
 
 void setup_wifiAP(){
+    if (!WiFi.softAPConfig(ip, gateways, subnets))
+    {
+        Serial.println("AP Config Failed");
+    }
+
     WiFi.mode(WIFI_AP);
     WiFi.softAP(ssid, password);
 
@@ -82,6 +87,26 @@ void Config_server(){
     return;
 
   }
+
+    /* ============================ อ่านไฟล์ .env ============================ */
+    server.on("/env", HTTP_GET, [](AsyncWebServerRequest *request)
+              {
+    File file = SPIFFS.open("/.env", "r");
+    if (!file) {
+        request->send(500, "text/plain", "Failed to open file");
+        return;
+    }
+
+    String fileContent;
+    while (file.available()) {
+        fileContent += file.readStringUntil('\n') + "\n"; // Ensure newline characters are included
+    }
+    file.close();
+    request->send(200, "text/plain", fileContent); });
+    /* ==================================================================== */
+
+  readEnvFile();
+  configureNetwork(local_IP, gateway, subnet, dnss);
   setup_wifiAP();
 
 
@@ -121,8 +146,13 @@ server.on("/122553",HTTP_GET, [](AsyncWebServerRequest *request)
 server.on("/networks",HTTP_GET, [](AsyncWebServerRequest *request)
           {request->send(SPIFFS, "/networks.html"); });
 
+server.on("/saveConfig" , HTTP_POST, handleSaveConfig);
+
 server.on("/scripts.js",HTTP_GET, [](AsyncWebServerRequest *request)
           {request->send(SPIFFS, "/scripts.js","application/javascript"); });
+  
+server.on("/networksConfig" , HTTP_POST, handleNetworksConfig);
+  
   MDNS.addService("http","tcp",80);
   server.begin();        
 }
@@ -375,4 +405,24 @@ void handleNetworksConfig(AsyncWebServerRequest *request)
 #endif
         request->send(500, "text/plain", "Failed to update configuration");
     }
+}
+void handleSaveConfig(AsyncWebServerRequest *request)
+{
+  String action;
+  if (request->hasParam("action", true))
+  {
+    action = request->getParam("action", true)->value();
+    if (action == "complete")
+    {
+      skip = true;
+      // Perform complete action
+      request->send(200, "text/plain", "Complete action performed.");
+    }
+    else if (action == "restart")
+    {
+      request->send(200, "text/plain", "Restarting ESP.");
+      delay(2000);
+      ESP.restart();
+    }
+  }
 }
