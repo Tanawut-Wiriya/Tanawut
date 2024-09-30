@@ -152,6 +152,9 @@ server.on("/scripts.js",HTTP_GET, [](AsyncWebServerRequest *request)
           {request->send(SPIFFS, "/scripts.js","application/javascript"); });
   
 server.on("/networksConfig" , HTTP_POST, handleNetworksConfig);
+
+server.on("/random",HTTP_GET, [](AsyncWebServerRequest *request)
+          {request->send(SPIFFS, "/random.html"); });
   
   MDNS.addService("http","tcp",80);
   server.begin();        

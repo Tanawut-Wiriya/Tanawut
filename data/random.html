@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>สุ่มเครื่องดื่ม</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            background: linear-gradient(to right, #a8edea, #fed6e3);
+            color: #333;
+            padding: 0;
+            margin: 0;
+            animation: fadeIn 1s;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .container {
+            margin: 100px auto;
+            padding: 30px;
+            border-radius: 15px;
+            background-color: #ffffff;
+            width: 350px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .container:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+        }
+        h1 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #ff6f61;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+        }
+        .drink-name {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 15px 0;
+            color: #333;
+        }
+        .drink-description {
+            font-size: 16px;
+            color: #555;
+            margin: 10px 0;
+            padding: 0 10px;
+        }
+        .button {
+            display: inline-block;
+            padding: 15px 30px;
+            margin: 10px;
+            font-size: 18px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+            font-weight: bold;
+        }
+        .random-button {
+            background-color: #ff6f61;
+            color: white;
+        }
+        .random-button:hover {
+            background-color: #ff4f51;
+            transform: translateY(-2px);
+        }
+        .home-button {
+            background-color: #007bff;
+            color: white;
+        }
+        .home-button:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+        }
+        
+        .drink-animation {
+            animation: bounce 0.5s ease;
+        }
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-10px);
+            }
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>สุ่มเครื่องดื่มของคุณ</h1>
+    <div class="drink-name drink-animation" id="drinkName">ชื่อเครื่องดื่มที่สุ่ม</div>
+    <p class="drink-description" id="drinkDescription">คำอธิบายสั้นๆ ของเครื่องดื่ม</p>
+    
+    <button class="button random-button" onclick="randomDrink()">สุ่มเครื่องดื่มใหม่!</button>
+    <button class="button home-button" onclick="window.location.href='/'">กลับสู่หน้าแรก</button>
+</div>
+
+<script>
+    const drinks = [
+        {
+            name: "ชาเย็น",
+            description: "ชาเย็นหอมหวานเย็นชื่นใจ"
+        },
+        {
+            name: "กาแฟ",
+            description: "กาแฟเข้มข้นสำหรับคนรักกาแฟ"
+        },
+        {
+            name: "น้ำส้ม",
+            description: "น้ำส้มสดชื่นให้พลังงาน"
+        },
+        {
+            name: "น้ำมะพร้าว",
+            description: "น้ำมะพร้าวหอมหวานดับกระหาย"
+        },
+        {
+            name: "ช็อกโกแลตร้อน",
+            description: "ช็อกโกแลตเข้มข้นอุ่นๆ สำหรับวันหนาว"
+        },
+        {
+            name: "นมสด",
+            description: "นมสดอร่อยๆ สำหรับสายสุขภาพ"
+        },
+        {
+            name: "ชาพีช",
+            description: "ชาสดๆกับกลิ่นพีชหอมๆ"
+        },
+        {
+            name: "โกโก้",
+            description: "โกโก้แท้ สูตรเข้มข้น!"
+        },
+        {
+            name: "สตรอว์เบอรี่",
+            description: "น้ำสตรอว์เบอรี่ สำหรับสาวๆสายหวานอมเปรี้ยว"
+        },
+        {
+            name: "มัจฉะ",
+            description: "มัจฉะเข้มข้น ดีต่อสุขภาพ"
+        },
+        {
+            name: "ชาเขียว",
+            description: "ชาเขียวนม หอมอร่อย!"
+        },
+        {
+            name: "โยเกิร์ต",
+            description: "สำหรับบุคคลที่ดูแลสุขภาพ!"
+        },
+        {
+            name: "น้ำผิ้งมะนาว",
+            description: "กลิ่นน้ำผึ้งและมะนาวที่ผสมกันอย่างลงตัว"
+        },
+        {
+            name: "ชากุหลาบ",
+            description: "น้ำชาที่่หอมกลิ่นกุหลาบอ่อนๆ"
+        },
+    ];
+
+    function randomDrink() {
+        const randomIndex = Math.floor(Math.random() * drinks.length);
+        const drink = drinks[randomIndex];
+        document.getElementById('drinkName').innerText = drink.name;
+        document.getElementById('drinkDescription').innerText = drink.description;
+
+        
+        const drinkNameElement = document.getElementById('drinkName');
+        drinkNameElement.classList.remove('drink-animation');
+        void drinkNameElement.offsetWidth; // Trigger reflow
+        drinkNameElement.classList.add('drink-animation');
+    }
+</script>
+
+</body>
+</html>

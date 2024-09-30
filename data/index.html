@@ -1,29 +1,134 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="th">
 <head>
-  <title>Bootstrap 5 Example</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link href="styles.css" rel="stylesheet">
-  <script src="bscripts.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>หน้าเว็บตัวอย่าง</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0e3e8; /* พื้นหลังพาสเทล */
+            color: #343a40;
+        }
+        header {
+            background: #ff6f61; /* สีพื้นหลังของ header */
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        main {
+            padding: 30px;
+            background: #ffffff;
+            max-width: 800px;
+            margin: 20px auto;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        button {
+            padding: 12px 25px;
+            margin: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #28a745; /* ปรับสีพื้นหลังปุ่ม */
+            color: #fff;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        button:hover {
+            background-color: #218838;
+            transform: scale(1.05);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+        }
+        #randomResult {
+            margin-top: 20px;
+            font-size: 26px;
+            font-weight: bold;
+            color: #495057;
+            opacity: 0;
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        .show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .hide {
+            transform: translateY(-20px);
+        }
+        .bounce {
+            animation: bounce 0.5s;
+        }
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-10px);
+            }
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+        footer {
+            text-align: center;
+            padding: 15px 0;
+            background: #ff6f61; /* สีพื้นหลังของ footer */
+            color: #fff;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
+        }
+    </style>
 </head>
 <body>
+    <header>
+        <h1>Tanawut Witiya</h1>
+    </header>
+    <main>
+        <h2>Choose Page:</h2>
+        <button onclick="location.href='info'">Profile</button>
+        <button onclick="location.href='random'">Random</button>
+        <div id="randomResult" class="hide"></div>
+    </main>
+    <footer>
 
-<div class="container-fluid p-5 bg-primary text-white text-center">
-  <h1>Mian Page</h1>
-</div>
-  
-<div class="container mt-5">
-  <div class="row">
-    <div class="col-sm-4">
-      <h3>About me</h3>
-      <p>Curriculum Vitae</p>
-      <a href="/info" type="button" class="btn btn-secondary">Open</a>
-    </div>
 
-    </div>
-  </div>
-</div>
+    <script>
+        function generateRandom() {
+            const messages = [
+                "ยินดีต้อนรับ!",
+                "คุณมีความสามารถพิเศษ!",
+                "การเรียนรู้ไม่มีที่สิ้นสุด!",
+                "จงเชื่อในตัวเอง!",
+                "วันนี้เป็นวันดี!",
+                "คุณทำได้แน่นอน!"
+            ];
 
+            const randomIndex = Math.floor(Math.random() * messages.length);
+            const resultDiv = document.getElementById('randomResult');
+            const randomButton = document.getElementById('randomButton');
+
+            // ทำให้ผลลัพธ์หายไปก่อน
+            resultDiv.classList.remove('show');
+            resultDiv.classList.add('hide');
+
+            setTimeout(() => {
+                resultDiv.innerText = messages[randomIndex];
+                resultDiv.classList.remove('hide');
+                resultDiv.classList.add('show');
+                resultDiv.classList.add('bounce');
+
+                setTimeout(() => {
+                    resultDiv.classList.remove('bounce');
+                }, 500);
+            }, 300); 
+        }
+    </script>
 </body>
 </html>
